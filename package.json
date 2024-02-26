@@ -4,6 +4,7 @@
   "description": "EDIT backend test",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -14,14 +15,21 @@
   "author": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "dotenv": "^16.4.4",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
-    "joi": "^17.12.1",
+    "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.3"
-  }
+    "install": "^0.13.0",
+    "nodemon": "^3.1.0",
+    "npm": "^10.4.0"
+  },
+  "bugs": {
+    "url": "https://github.com/s1moe2/edit-be-0402-test/issues"
+  },
+  "homepage": "https://github.com/s1moe2/edit-be-0402-test#readme",
+  "license": "ISC"
 }

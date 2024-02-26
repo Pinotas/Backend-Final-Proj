@@ -24,5 +24,5 @@ module.exports = {
   getDB,
   toMongoID,
   usersCollection: "users",
-  pollsCollection: "polls",
+  pollsCollection: "Polls",
 };

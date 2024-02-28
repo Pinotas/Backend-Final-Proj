@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const services = require("./services");
-const { isSchema, options } = require("joi");
+const { options } = require("joi");
 const schemas = require("./schemas");
+const middle = require("../middleware");
 
 router.get("/", async (req, res) => {
   const polls = await services.getAllPolls();
@@ -25,7 +26,7 @@ router.get("/:id", async (req, res) => {
   res.status(200).json(poll);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", middle.auth, async (req, res) => {
   const { error, value } = schemas.createPollSchema.validate(req.body);
   if (error) {
     return res.status(400).json(error.details);
@@ -37,7 +38,7 @@ router.post("/", async (req, res) => {
   res.status(201).json(createPoll);
 });
 
-router.put("/:id/vote", async (req, res) => {
+router.put("/:id/vote", middle.auth, async (req, res) => {
   const pollId = req.params.id;
   const option = req.body.option;
 
@@ -56,7 +57,7 @@ router.put("/:id/vote", async (req, res) => {
   res.status(200).json({ message: "voted!" });
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", middle.auth, async (req, res) => {
   const pollId = req.params.id;
 
   const poll = await services.getPollById(pollId);

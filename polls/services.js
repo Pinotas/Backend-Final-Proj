@@ -21,6 +21,32 @@ async function getAllPolls() {
   }
 }
 
+async function createPoll(value) {
+  try {
+    return await db.getDB().collection(db.pollsCollection).insertOne(value);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+async function votePoll(pollId, option) {
+  try {
+    return await db
+      .getDB()
+      .collection(db.pollsCollection)
+      .updateOne(
+        { _id: db.toMongoID(pollId), "options.option": option },
+        {
+          $inc: { "options.$.votes": 1 },
+        }
+      );
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 async function deletePollById(pollId) {
   try {
     const result = await db
@@ -39,4 +65,6 @@ module.exports = {
   getPollById,
   getAllPolls,
   deletePollById,
+  createPoll,
+  votePoll,
 };

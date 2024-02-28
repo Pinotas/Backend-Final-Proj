@@ -18,7 +18,9 @@ router.get("/:id", async (req, res) => {
   res.status(200).json(poll);
 });
 
-router.post("/", middle.auth, async (req, res) => {
+router.use(middle.auth);
+
+router.post("/", async (req, res) => {
   const { error, value } = schemas.createPollSchema.validate(req.body);
   if (error) {
     return res.status(400).json(error.details);
@@ -30,7 +32,7 @@ router.post("/", middle.auth, async (req, res) => {
   res.status(201).json(createPoll);
 });
 
-router.put("/:id/vote", middle.auth, async (req, res) => {
+router.put("/:id/vote", async (req, res) => {
   const pollId = req.params.id;
   const option = req.body.option;
 
@@ -49,7 +51,7 @@ router.put("/:id/vote", middle.auth, async (req, res) => {
   res.status(200).json({ message: "voted!" });
 });
 
-router.delete("/:id", middle.auth, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const pollId = req.params.id;
 
   const poll = await services.getPollById(pollId);

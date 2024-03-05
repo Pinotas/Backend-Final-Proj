@@ -3,6 +3,7 @@ const Joi = require("joi");
 const createPollSchema = Joi.object({
   question: Joi.string().required(),
   options: Joi.array().items(Joi.string()).min(2).max(10).required(),
+  expireAt: Joi.date(),
 });
 
 const voteSchema = Joi.object({

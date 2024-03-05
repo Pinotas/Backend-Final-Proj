@@ -11,9 +11,10 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const poll = await services.getPollById(req.params.id);
+  const pollId = req.params.id;
+  const poll = await services.getPollById(pollId);
   if (!poll) {
-    return res.status(404).json({ error: "poll not found" });
+    return res.status(404).json({ error: "Poll Not Found" });
   }
   res.status(200).json(poll);
 });
@@ -42,13 +43,17 @@ router.put("/:id/vote", async (req, res) => {
   }
   const poll = await services.getPollById(pollId);
   if (!poll) {
-    return res.status(404).json({ error: "poll not found" });
+    return res.status(404).json({ error: "Poll Not Found" });
   }
+  if (poll.expiresAt && poll.expiresAt < new Date()) {
+    return res.status(400).json({ error: "expired poll" });
+  }
+
   const uptadeResult = await services.votePoll(pollId, option);
   if (!uptadeResult) {
-    return res.status(500).json({ error: "failed to vote" });
+    return res.status(500).json({ error: "Failed To Vote" });
   }
-  res.status(200).json({ message: "voted!" });
+  res.status(200).json({ message: "Voted!" });
 });
 
 router.delete("/:id", async (req, res) => {
@@ -56,15 +61,15 @@ router.delete("/:id", async (req, res) => {
 
   const poll = await services.getPollById(pollId);
   if (!poll) {
-    return res.status(404).json({ error: "poll not found" });
+    return res.status(404).json({ error: "Poll Not Found" });
   }
 
   const deleted = await services.deletePollById(pollId);
   if (!deleted) {
-    return res.status(500).json({ error: "failed to delete poll" });
+    return res.status(500).json({ error: "Failed To Delete Poll" });
   }
 
-  res.status(200).json({ message: "poll deleted successfully" });
+  res.status(200).json({ message: "Poll Deleted Successfully" });
 });
 
 module.exports = router;

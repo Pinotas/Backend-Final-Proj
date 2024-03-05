@@ -6,8 +6,8 @@ const polls = require("./polls/routes");
 const pino = require("pino-http")();
 
 const app = express();
-app.use(express.json());
 app.use(pino);
+app.use(express.json());
 app.use("/auth", auth);
 app.use("/polls", polls);
 

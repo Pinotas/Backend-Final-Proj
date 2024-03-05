@@ -20,13 +20,16 @@
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
+    "mongoose": "^8.2.0",
     "pino-http": "^9.0.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "nodemon": "^3.1.0"
     "install": "^0.13.0",
     "nodemon": "^3.1.0",
     "npm": "^10.4.0"
+
   },
   "bugs": {
     "url": "https://github.com/s1moe2/edit-be-0402-test/issues"
